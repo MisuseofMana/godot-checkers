@@ -1,0 +1,40 @@
+[gd_scene load_steps=9 format=4 uid="uid://brj733tcgn23c"]
+
+[ext_resource type="Texture2D" uid="uid://oj3otak1lotd" path="res://board.png" id="1_2lm0h"]
+[ext_resource type="PackedScene" uid="uid://bbmbn02kp6t3h" path="res://grid-movement/pieces/variants/dark_piece.tscn" id="2_t1kgm"]
+[ext_resource type="PackedScene" uid="uid://d3wp0or64hfl7" path="res://grid-movement/pieces/variants/light_piece.tscn" id="3_r46qh"]
+[ext_resource type="Script" path="res://grid-movement/piece_controller.gd" id="4_0eg1t"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_76bu2"]
+texture = ExtResource("1_2lm0h")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_2srqh"]
+tile_size = Vector2i(64, 64)
+sources/2 = SubResource("TileSetAtlasSource_76bu2")
+tile_proxies/coords_level = [[0, Vector2i(0, 0)], [2, Vector2i(0, 0)], [1, Vector2i(0, 0)], [2, Vector2i(1, 0)]]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_n7duf"]
+scenes/1/scene = ExtResource("2_t1kgm")
+scenes/2/scene = ExtResource("3_r46qh")
+
+[sub_resource type="TileSet" id="TileSet_eh1yx"]
+tile_size = Vector2i(64, 64)
+sources/1 = SubResource("TileSetScenesCollectionSource_n7duf")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Board" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD8//z/AgAAAAAAAAD8//3/AgABAAAAAAD8//7/AgAAAAAAAAD8////AgABAAAAAAD8/wAAAgAAAAAAAAD8/wEAAgABAAAAAAD8/wIAAgAAAAAAAAD9//z/AgABAAAAAAD9//3/AgAAAAAAAAD9//7/AgABAAAAAAD9////AgAAAAAAAAD9/wAAAgABAAAAAAD9/wEAAgAAAAAAAAD9/wIAAgABAAAAAAD+//z/AgAAAAAAAAD+//3/AgABAAAAAAD+//7/AgAAAAAAAAD+////AgABAAAAAAD+/wAAAgAAAAAAAAD+/wEAAgABAAAAAAD+/wIAAgAAAAAAAAD///z/AgABAAAAAAD///3/AgAAAAAAAAD///7/AgABAAAAAAD/////AgAAAAAAAAD//wAAAgABAAAAAAD//wEAAgAAAAAAAAD//wIAAgABAAAAAAAAAPz/AgAAAAAAAAAAAP3/AgABAAAAAAAAAP7/AgAAAAAAAAAAAP//AgABAAAAAAAAAAAAAgAAAAAAAAAAAAEAAgABAAAAAAAAAAIAAgAAAAAAAAABAPz/AgABAAAAAAABAP3/AgAAAAAAAAABAP7/AgABAAAAAAABAP//AgAAAAAAAAABAAAAAgABAAAAAAABAAEAAgAAAAAAAAABAAIAAgABAAAAAAACAPz/AgAAAAAAAAACAP3/AgABAAAAAAACAP7/AgAAAAAAAAACAP//AgABAAAAAAACAAAAAgAAAAAAAAACAAEAAgABAAAAAAACAAIAAgAAAAAAAAD8/wMAAgABAAAAAAD+/wMAAgABAAAAAAAAAAMAAgABAAAAAAACAAMAAgABAAAAAAADAAIAAgABAAAAAAADAAAAAgABAAAAAAADAP7/AgABAAAAAAADAPz/AgABAAAAAAADAP3/AgAAAAAAAAADAP//AgAAAAAAAAADAAEAAgAAAAAAAAADAAMAAgAAAAAAAAABAAMAAgAAAAAAAAD//wMAAgAAAAAAAAD9/wMAAgAAAAAAAAA=")
+tile_set = SubResource("TileSet_2srqh")
+
+[node name="Pieces" type="TileMapLayer" parent="." node_paths=PackedStringArray("board")]
+tile_map_data = PackedByteArray("AAD9/wMAAQAAAAAAAQD8/wIAAQAAAAAAAQD+/wIAAQAAAAAAAQD//wMAAQAAAAAAAQAAAAIAAQAAAAAAAQABAAMAAQAAAAAAAQACAAIAAQAAAAAAAQADAAMAAQAAAAAAAQD8//3/AQAAAAAAAgD9//z/AQAAAAAAAgD+//3/AQAAAAAAAgD///z/AQAAAAAAAgAAAP3/AQAAAAAAAgABAPz/AQAAAAAAAgACAP3/AQAAAAAAAgADAPz/AQAAAAAAAgA=")
+tile_set = SubResource("TileSet_eh1yx")
+script = ExtResource("4_0eg1t")
+board = NodePath("../Board")
+
+[connection signal="child_entered_tree" from="Pieces" to="Pieces" method="_on_piece_entered_tree"]
+[connection signal="child_exiting_tree" from="Pieces" to="Pieces" method="_on_piece_exiting_tree"]

@@ -1,0 +1,59 @@
+[gd_scene load_steps=12 format=4 uid="uid://brj733tcgn23c"]
+
+[ext_resource type="Texture2D" uid="uid://brr1nfdg3i1e4" path="res://grid-movement/art/board.png" id="1_hm3m5"]
+[ext_resource type="Script" path="res://grid-movement/game_controller.gd" id="1_lrbl6"]
+[ext_resource type="PackedScene" uid="uid://bbmbn02kp6t3h" path="res://grid-movement/pieces/variants/dark_piece.tscn" id="2_t1kgm"]
+[ext_resource type="PackedScene" uid="uid://d3wp0or64hfl7" path="res://grid-movement/pieces/variants/light_piece.tscn" id="3_r46qh"]
+[ext_resource type="Script" path="res://grid-movement/board_controller.gd" id="3_wy5qg"]
+[ext_resource type="Script" path="res://grid-movement/piece_controller.gd" id="4_0eg1t"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ulji1"]
+blend_mode = 1
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ftquj"]
+texture = ExtResource("1_hm3m5")
+texture_region_size = Vector2i(64, 64)
+0:0/next_alternative_id = 3
+0:0/0 = 0
+0:0/1 = 1
+0:0/1/modulate = Color(0, 1, 0, 1)
+0:0/1/material = SubResource("CanvasItemMaterial_ulji1")
+0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:0/1/custom_data_0 = true
+1:0/next_alternative_id = 2
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_2srqh"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "validMove"
+custom_data_layer_0/type = 1
+sources/1 = SubResource("TileSetAtlasSource_ftquj")
+tile_proxies/coords_level = [[0, Vector2i(0, 0)], [2, Vector2i(0, 0)], [1, Vector2i(0, 0)], [2, Vector2i(1, 0)]]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_n7duf"]
+resource_name = "Pieces"
+scenes/1/scene = ExtResource("2_t1kgm")
+scenes/2/scene = ExtResource("3_r46qh")
+
+[sub_resource type="TileSet" id="TileSet_eh1yx"]
+tile_size = Vector2i(64, 64)
+sources/1 = SubResource("TileSetScenesCollectionSource_n7duf")
+
+[node name="GameBoard" type="Node2D"]
+script = ExtResource("1_lrbl6")
+
+[node name="Board" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD8/wIAAQABAAAAAAD9/wMAAQABAAAAAAD+/wIAAQABAAAAAAD//wMAAQABAAAAAAAAAAIAAQABAAAAAAABAAMAAQABAAAAAAACAAIAAQABAAAAAAADAAMAAQABAAAAAAD9/wEAAQABAAAAAAD8/wAAAQABAAAAAAD+/wAAAQABAAAAAAAAAAAAAQABAAAAAAACAAAAAQABAAAAAAADAP//AQABAAAAAAABAP//AQABAAAAAAD/////AQABAAAAAAD9////AQABAAAAAAD8//7/AQABAAAAAAD+//7/AQABAAAAAAAAAP7/AQABAAAAAAACAP7/AQABAAAAAAADAP3/AQABAAAAAAABAP3/AQABAAAAAAD///3/AQABAAAAAAD9//3/AQABAAAAAAD8//z/AQABAAAAAAD+//z/AQABAAAAAAAAAPz/AQABAAAAAAACAPz/AQABAAAAAAD//wEAAQABAAAAAAABAAEAAQABAAAAAAADAAEAAQABAAAAAAD8/wMAAQAAAAAAAAD9/wIAAQAAAAAAAAD8/wEAAQAAAAAAAAD9/wAAAQAAAAAAAAD8////AQAAAAAAAAD9//7/AQAAAAAAAAD8//3/AQAAAAAAAAD9//z/AQAAAAAAAAD+//3/AQAAAAAAAAD+////AQAAAAAAAAD///7/AQAAAAAAAAD///z/AQAAAAAAAAAAAP3/AQAAAAAAAAABAPz/AQAAAAAAAAACAP3/AQAAAAAAAAADAPz/AQAAAAAAAAADAP7/AQAAAAAAAAABAP7/AQAAAAAAAAACAP//AQAAAAAAAAAAAP//AQAAAAAAAAABAAAAAQAAAAAAAAD//wAAAQAAAAAAAAAAAAEAAQAAAAAAAAD+/wEAAQAAAAAAAAD//wIAAQAAAAAAAAD+/wMAAQAAAAAAAAAAAAMAAQAAAAAAAAABAAIAAQAAAAAAAAACAAEAAQAAAAAAAAADAAIAAQAAAAAAAAACAAMAAQAAAAAAAAADAAAAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_2srqh")
+script = ExtResource("3_wy5qg")
+
+[node name="Pieces" type="TileMapLayer" parent="." node_paths=PackedStringArray("board")]
+tile_map_data = PackedByteArray("AAD8/wMAAQAAAAAAAQD9/wIAAQAAAAAAAQD+/wMAAQAAAAAAAQD//wIAAQAAAAAAAQAAAAMAAQAAAAAAAQABAAIAAQAAAAAAAQACAAMAAQAAAAAAAQADAAIAAQAAAAAAAQD8/wEAAQAAAAAAAQD+/wEAAQAAAAAAAQAAAAEAAQAAAAAAAQACAAEAAQAAAAAAAQD9//z/AQAAAAAAAgD8//3/AQAAAAAAAgD9//7/AQAAAAAAAgD+//3/AQAAAAAAAgD///z/AQAAAAAAAgD///7/AQAAAAAAAgAAAP3/AQAAAAAAAgABAPz/AQAAAAAAAgABAP7/AQAAAAAAAgACAP3/AQAAAAAAAgADAPz/AQAAAAAAAgADAP7/AQAAAAAAAgA=")
+tile_set = SubResource("TileSet_eh1yx")
+script = ExtResource("4_0eg1t")
+board = NodePath("../Board")
+
+[connection signal="valid_move_clicked" from="Board" to="Pieces" method="move_piece"]
+[connection signal="child_entered_tree" from="Pieces" to="Pieces" method="_on_piece_entered_tree"]
+[connection signal="child_exiting_tree" from="Pieces" to="Pieces" method="_on_piece_exiting_tree"]

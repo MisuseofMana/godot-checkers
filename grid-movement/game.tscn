@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=3 uid="uid://db5sh214c1rw4"]
+
+[ext_resource type="PackedScene" uid="uid://brj733tcgn23c" path="res://grid-movement/game-board.tscn" id="1_5lrab"]
+[ext_resource type="Texture2D" uid="uid://dh00byov5r1y5" path="res://grid-movement/art/dark_piece.png" id="1_ym2k5"]
+
+[node name="Game" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+offset_right = 320.0
+offset_bottom = 648.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 63)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ym2k5")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "DARK TO MOVE"
+
+[node name="Panel2" type="Panel" parent="CanvasLayer/Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel2/MarginContainer"]
+layout_mode = 2
+
+[node name="GameBoard" parent="." instance=ExtResource("1_5lrab")]
+position = Vector2(576, 320)
