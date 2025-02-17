@@ -6,6 +6,7 @@ class_name GamePiece extends Node2D
 @onready var area_2d = $PieceSprite/Area2D
 @onready var anims = $PieceSprite/AnimationPlayer
 @onready var piece_sprite = $PieceSprite
+@onready var collider = $PieceSprite/Area2D/CollisionShape2D
 
 const DARK_KING = preload("res://grid-movement/art/dark-king.png")
 const LIGHT_KING = preload("res://grid-movement/art/light-king.png")
@@ -60,4 +61,9 @@ func promote_piece():
 			piece_sprite.texture = LIGHT_KING
 		'dark':
 			piece_sprite.texture = DARK_KING
-		
+
+func disable_collision():
+	collider.disabled = true
+
+func enable_collision():
+	collider.disabled = false

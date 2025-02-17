@@ -1,11 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3wp0or64hfl7"]
+[gd_scene load_steps=2 format=3 uid="uid://d3wp0or64hfl7"]
 
 [ext_resource type="PackedScene" uid="uid://bda8ej5u2fy4f" path="res://grid-movement/pieces/piece.tscn" id="1_gjmsh"]
-[ext_resource type="Texture2D" uid="uid://bh33dh1fhiaal" path="res://grid-movement/art/light_piece.png" id="2_0v30v"]
 
-[node name="Sprite2D" instance=ExtResource("1_gjmsh")]
+[node name="Sprite2D" groups=["light_piece"] instance=ExtResource("1_gjmsh")]
 piece_type = &"light"
-
-[node name="PieceSprite" parent="." index="1"]
-texture = ExtResource("2_0v30v")
-region_enabled = false

@@ -41,7 +41,6 @@ tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetScenesCollectionSource_n7duf")
 
 [node name="GameBoard" type="Node2D"]
-position = Vector2(256, 256)
 script = ExtResource("1_lrbl6")
 
 [node name="Board" type="TileMapLayer" parent="."]
@@ -49,15 +48,12 @@ tile_map_data = PackedByteArray("AAD8/wIAAQABAAAAAAD9/wMAAQABAAAAAAD+/wIAAQABAAA
 tile_set = SubResource("TileSet_2srqh")
 script = ExtResource("3_wy5qg")
 
-[node name="Pieces" type="TileMapLayer" parent="." node_paths=PackedStringArray("board", "gameState")]
+[node name="Pieces" type="TileMapLayer" parent="." node_paths=PackedStringArray("board")]
 tile_map_data = PackedByteArray("AAD8/wMAAQAAAAAAAQD9/wIAAQAAAAAAAQD+/wMAAQAAAAAAAQD//wIAAQAAAAAAAQAAAAMAAQAAAAAAAQABAAIAAQAAAAAAAQACAAMAAQAAAAAAAQADAAIAAQAAAAAAAQD8/wEAAQAAAAAAAQD+/wEAAQAAAAAAAQAAAAEAAQAAAAAAAQACAAEAAQAAAAAAAQD9//z/AQAAAAAAAgD8//3/AQAAAAAAAgD9//7/AQAAAAAAAgD+//3/AQAAAAAAAgD///z/AQAAAAAAAgD///7/AQAAAAAAAgAAAP3/AQAAAAAAAgABAPz/AQAAAAAAAgABAP7/AQAAAAAAAgACAP3/AQAAAAAAAgADAPz/AQAAAAAAAgADAP7/AQAAAAAAAgA=")
 tile_set = SubResource("TileSet_eh1yx")
 script = ExtResource("4_0eg1t")
 board = NodePath("../Board")
-gameState = NodePath("..")
 
 [connection signal="valid_move_clicked" from="Board" to="Pieces" method="move_piece"]
 [connection signal="child_entered_tree" from="Pieces" to="Pieces" method="_on_piece_entered_tree"]
 [connection signal="child_exiting_tree" from="Pieces" to="Pieces" method="_on_piece_exiting_tree"]
-[connection signal="move_prepared" from="Pieces" to="." method="set_move_type"]
-[connection signal="player_turn_changed" from="Pieces" to="." method="change_turn"]

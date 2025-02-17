@@ -1,11 +1,41 @@
-extends Node2D
+class_name BoardState extends Node2D
 
+enum Moves {
+	CAPTURE,
+	MOVE,
+	NONE = -1
+}
 
-# Called when the node enters the scene tree for the first time.
+enum WhosTurn {
+	DARK,
+	LIGHT,
+}
+
+var active_player := WhosTurn.DARK
+var prepared_move : Moves = Moves.NONE
+
 func _ready():
-	pass # Replace with function body.
+	turn_setup.call_deferred()
 
+func turn_setup():
+	match active_player:
+		WhosTurn.DARK:
+			get_tree().call_group('light_piece', 'disable_collision')
+			get_tree().call_group('dark_piece', 'enable_collision')
+		WhosTurn.LIGHT:
+			get_tree().call_group('light_piece', 'enable_collision')
+			get_tree().call_group('dark_piece', 'disable_collision')
+			
+func change_turn():
+	active_player = (active_player + 1) % WhosTurn.size()
+	turn_setup()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func set_move_type(moveName: StringName):
+	match moveName:
+		'capture':
+			prepared_move = Moves.CAPTURE
+		'move':
+			prepared_move = Moves.MOVE
+
+func clear_prepared_move():
+	prepared_move = Moves.NONE

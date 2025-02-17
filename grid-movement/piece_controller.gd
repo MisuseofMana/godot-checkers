@@ -1,10 +1,16 @@
 class_name PieceController extends TileMapLayer
 
 @export var board : TileMapLayer
+@export var gameState : BoardState
 
 var piece_dictionary : Dictionary = {}
 var activeCells : Array[Vector2i]
 var activePiece : GamePiece
+var capture_paths : Dictionary = {}
+
+signal piece_captured
+signal move_prepared(moveName: StringName)
+signal player_turn_changed
 
 #region Signal Connect/Disconnect
 func _on_piece_entered_tree(piece : GamePiece):
@@ -27,6 +33,7 @@ func handle_piece_click(whichPiece: GamePiece):
 	if not whichPiece.isClicked:
 		for cell in diagonals:
 			board.set_cell(cell, 1, board.get_cell_atlas_coords(cell), 0)
+		gameState.clear_prepared_move()
 		activeCells = []
 		activePiece = null
 #endregion
@@ -67,6 +74,8 @@ func get_possible_board_tiles(coords : Vector2i, piece: GamePiece) -> Array[Vect
 	var non_capture_moves: Array[Vector2i]
 	var capture_moves: Array[Vector2i]
 	
+	capture_paths = {}
+	
 # check the basic move squares on the board for pieces
 	for diagonal: Vector2i in all_arbitrary_moves:
 		var relativeCoord : Vector2i = coords + diagonal
@@ -76,19 +85,49 @@ func get_possible_board_tiles(coords : Vector2i, piece: GamePiece) -> Array[Vect
 				var next_rel_diagonal: Vector2i = relativeCoord + diagonal
 				var farPiece: GamePiece = piece_dictionary.get(next_rel_diagonal)
 				if not farPiece:
+					capture_paths.get_or_add(next_rel_diagonal, [relativeCoord, next_rel_diagonal])
 					capture_moves.append(next_rel_diagonal)
 		if not neighborPiece:
 			non_capture_moves.append(relativeCoord)
 	
-	if not capture_moves.is_empty():
+	if capture_moves.size() > 0:
+		move_prepared.emit('capture')
 		return capture_moves
 	else:
+		move_prepared.emit('move')
 		return non_capture_moves
 #endregion
 
+func filter_duplicates(array: Array) -> Array:
+	var unique: Array = []
+	for item in array:
+		if not unique.has(item):
+			unique.append(item)
+	return unique
+
 func move_piece(which: Vector2i):
+#	reset board cells to their inactive tiles
 	for cell in activeCells:
 		board.set_cell(cell, 1, board.get_cell_atlas_coords(cell), 0)
-		piece_dictionary.erase(activePiece.get_piece_coords())
-		activePiece.position = map_to_local(which)
-		piece_dictionary.get_or_add(activePiece.get_piece_coords(), activePiece)
+#	remove moving piece from piece dictionary
+	piece_dictionary.erase(activePiece.get_piece_coords())
+	
+	if gameState.prepared_move == gameState.Moves.CAPTURE:
+#		run capture logic
+		var moves = capture_paths[which]
+		await create_tween().tween_property(activePiece, 'position', map_to_local(moves[0]), 0.1).finished
+		activePiece.anims.play('slam')
+		piece_dictionary[moves[0]].anims.play('captured')
+		piece_dictionary.erase(moves[0])
+		await create_tween().tween_property(activePiece, 'position', map_to_local(moves[1]), 0.1).finished
+		activePiece.anims.play_backwards('raise')
+		await activePiece.anims.animation_finished
+	if gameState.prepared_move == gameState.Moves.MOVE:
+		await create_tween().tween_property(activePiece, 'position', map_to_local(which), 0.1).finished
+		activePiece.anims.play_backwards('raise')
+		await activePiece.anims.animation_finished
+	
+	piece_dictionary.get_or_add(activePiece.get_piece_coords(), activePiece)
+	activePiece.isClicked = false
+	activePiece = null
+	player_turn_changed.emit()
