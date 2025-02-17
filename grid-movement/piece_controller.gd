@@ -25,6 +25,7 @@ func _on_piece_exiting_tree(piece : GamePiece):
 func handle_piece_click(whichPiece: GamePiece):
 	var coords : Vector2i = whichPiece.get_piece_coords()
 	var diagonals = get_valid_moves(coords, whichPiece)
+	whichPiece.piece_sounds.play()
 	if whichPiece.isClicked:
 		for cell in diagonals:
 			board.set_cell(cell, 1, board.get_cell_atlas_coords(cell), 1)
@@ -110,6 +111,7 @@ func move_piece(which: Vector2i):
 	for cell in activeCells:
 		board.set_cell(cell, 1, board.get_cell_atlas_coords(cell), 0)
 #	remove moving piece from piece dictionary
+	activePiece.z_index = 100
 	piece_dictionary.erase(activePiece.get_piece_coords())
 	
 	if gameState.prepared_move == gameState.Moves.CAPTURE:
@@ -117,17 +119,22 @@ func move_piece(which: Vector2i):
 		var moves = capture_paths[which]
 		await create_tween().tween_property(activePiece, 'position', map_to_local(moves[0]), 0.1).finished
 		activePiece.anims.play('slam')
+		piece_dictionary[moves[0]].capture_sound.play()
+		await activePiece.anims.animation_finished
 		piece_dictionary[moves[0]].anims.play('captured')
 		piece_dictionary.erase(moves[0])
 		await create_tween().tween_property(activePiece, 'position', map_to_local(moves[1]), 0.1).finished
 		activePiece.anims.play_backwards('raise')
+		activePiece.piece_sounds.play()
 		await activePiece.anims.animation_finished
 	if gameState.prepared_move == gameState.Moves.MOVE:
 		await create_tween().tween_property(activePiece, 'position', map_to_local(which), 0.1).finished
 		activePiece.anims.play_backwards('raise')
+		activePiece.piece_sounds.play()
 		await activePiece.anims.animation_finished
 	
 	piece_dictionary.get_or_add(activePiece.get_piece_coords(), activePiece)
 	activePiece.isClicked = false
+	activePiece.z_index = 1
 	activePiece = null
 	player_turn_changed.emit()

@@ -7,6 +7,8 @@ class_name GamePiece extends Node2D
 @onready var anims = $PieceSprite/AnimationPlayer
 @onready var piece_sprite = $PieceSprite
 @onready var collider = $PieceSprite/Area2D/CollisionShape2D
+@onready var capture_sound = $CaptureSound
+@onready var piece_sounds = $PieceSounds
 
 const DARK_KING = preload("res://grid-movement/art/dark-king.png")
 const LIGHT_KING = preload("res://grid-movement/art/light-king.png")
@@ -34,7 +36,7 @@ func _on_area_2d_input_event(_viewport, event, _shape_idx):
 		else:
 			select_piece()
 	if event.is_pressed() and event.button_index == MOUSE_BUTTON_RIGHT:
-		promote_piece()
+		isPromoted = true
 
 func select_piece():
 	isClicked = true
