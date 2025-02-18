@@ -9,6 +9,7 @@ class_name GamePiece extends Node2D
 @onready var collider = $PieceSprite/Area2D/CollisionShape2D
 @onready var capture_sound = $CaptureSound
 @onready var piece_sounds = $PieceSounds
+@onready var promotion_sound = $PromotionSounds
 
 const DARK_KING = preload("res://grid-movement/art/dark-king.png")
 const LIGHT_KING = preload("res://grid-movement/art/light-king.png")
@@ -17,10 +18,7 @@ signal piece_clicked(whichPiece: GamePiece)
 
 var pieceParent : PieceController
 var isClicked : bool = false
-var isPromoted : bool = false:
-	set(value):
-		isPromoted = value
-		promote_piece()
+var isPromoted : bool = false
 #endregion
 
 func _ready():
@@ -36,7 +34,7 @@ func _on_area_2d_input_event(_viewport, event, _shape_idx):
 		else:
 			select_piece()
 	if event.is_pressed() and event.button_index == MOUSE_BUTTON_RIGHT:
-		isPromoted = true
+		promote_piece()
 
 func select_piece():
 	isClicked = true
@@ -58,11 +56,14 @@ func get_piece_coords() -> Vector2i:
 	return pieceParent.local_to_map(position)
 	
 func promote_piece():
-	match piece_type:
-		'light':
-			piece_sprite.texture = LIGHT_KING
-		'dark':
-			piece_sprite.texture = DARK_KING
+	if not isPromoted:
+		isPromoted = true
+		anims.play('promotion')
+		match piece_type:
+			'light':
+				piece_sprite.texture = LIGHT_KING
+			'dark':
+				piece_sprite.texture = DARK_KING
 
 func disable_collision():
 	collider.disabled = true

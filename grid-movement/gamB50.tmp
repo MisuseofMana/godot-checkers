@@ -75,7 +75,6 @@ size_flags_horizontal = 4
 columns = 3
 
 [node name="LightWins" type="VBoxContainer" parent="CanvasLayer/Control/LeftContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="LightWins" type="VBoxContainer" parent="CanvasLayer/Control/LeftContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer/LightWins"]
@@ -216,7 +215,6 @@ size_flags_horizontal = 4
 columns = 3
 
 [node name="DarkWins" type="VBoxContainer" parent="CanvasLayer/Control/RightContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/RightContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer/DarkWins"]

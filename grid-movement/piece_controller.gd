@@ -4,13 +4,18 @@ class_name PieceController extends TileMapLayer
 @export var gameState : BoardState
 
 var piece_dictionary : Dictionary = {}
-var activeCells : Array[Vector2i]
 var activePiece : GamePiece
 var capture_paths : Dictionary = {}
 
-signal piece_captured
+signal piece_captured(pieceImage: Texture2D)
 signal move_prepared(moveName: StringName)
+signal reveal_available_moves(cells: Array[Vector2i])
+signal interaction_locked_to_piece(whichPiece: GamePiece)
+signal piece_interaction_unlocked
 signal player_turn_changed
+signal hide_avaliable_moves
+signal requested_promotion(whichPiece: GamePiece, whichCell: Vector2i)
+signal turn_continued
 
 #region Signal Connect/Disconnect
 func _on_piece_entered_tree(piece : GamePiece):
@@ -23,31 +28,29 @@ func _on_piece_exiting_tree(piece : GamePiece):
 
 #region Click Handling
 func handle_piece_click(whichPiece: GamePiece):
-	var coords : Vector2i = whichPiece.get_piece_coords()
-	var diagonals = get_valid_moves(coords, whichPiece)
+	var diagonals = get_valid_moves(whichPiece)
 	whichPiece.piece_sounds.play()
 	if whichPiece.isClicked:
-		for cell in diagonals:
-			board.set_cell(cell, 1, board.get_cell_atlas_coords(cell), 1)
-		activeCells = diagonals
+		reveal_available_moves.emit(diagonals)
 		activePiece = whichPiece
+		interaction_locked_to_piece.emit(whichPiece)
 	if not whichPiece.isClicked:
-		for cell in diagonals:
-			board.set_cell(cell, 1, board.get_cell_atlas_coords(cell), 0)
+		hide_avaliable_moves.emit()
+		piece_interaction_unlocked.emit()
 		gameState.clear_prepared_move()
-		activeCells = []
 		activePiece = null
 #endregion
 
 #region Piece Movement Logic
-func get_valid_moves(coords: Vector2i, piece: GamePiece):
+func get_valid_moves(piece: GamePiece):
 	var availableDiagonals: Array[Vector2i]
-	for diagonal in get_possible_board_tiles(coords, piece):
+	for diagonal in get_possible_board_tiles(piece):
 		if board.get_cell_source_id(diagonal) > -1:
 			availableDiagonals.append(diagonal)
 	return availableDiagonals
 
-func get_possible_board_tiles(coords : Vector2i, piece: GamePiece) -> Array[Vector2i]:
+func get_possible_board_tiles(piece: GamePiece) -> Array[Vector2i]:
+	var coords : Vector2i = piece.get_piece_coords()
 	var neighbor_diagonals : Array[Vector2i] = [
 		Vector2i(-1,-1), #NW
 		Vector2i(1,-1), #NE
@@ -84,10 +87,11 @@ func get_possible_board_tiles(coords : Vector2i, piece: GamePiece) -> Array[Vect
 		if neighborPiece:
 			if neighborPiece.piece_type != piece.piece_type:
 				var next_rel_diagonal: Vector2i = relativeCoord + diagonal
-				var farPiece: GamePiece = piece_dictionary.get(next_rel_diagonal)
-				if not farPiece:
-					capture_paths.get_or_add(next_rel_diagonal, [relativeCoord, next_rel_diagonal])
-					capture_moves.append(next_rel_diagonal)
+				if board.get_cell_atlas_coords(next_rel_diagonal) != Vector2i(-1, -1):
+					var farPiece: GamePiece = piece_dictionary.get(next_rel_diagonal)
+					if not farPiece:
+						capture_paths.get_or_add(next_rel_diagonal, [relativeCoord, next_rel_diagonal])
+						capture_moves.append(next_rel_diagonal)
 		if not neighborPiece:
 			non_capture_moves.append(relativeCoord)
 	
@@ -107,33 +111,36 @@ func filter_duplicates(array: Array) -> Array:
 	return unique
 
 func move_piece(which: Vector2i):
-#	reset board cells to their inactive tiles
-	for cell in activeCells:
-		board.set_cell(cell, 1, board.get_cell_atlas_coords(cell), 0)
-#	remove moving piece from piece dictionary
+	hide_avaliable_moves.emit()
+
 	activePiece.z_index = 100
 	piece_dictionary.erase(activePiece.get_piece_coords())
 	
 	if gameState.prepared_move == gameState.Moves.CAPTURE:
-#		run capture logic
+#		run capture animations and logic
 		var moves = capture_paths[which]
 		await create_tween().tween_property(activePiece, 'position', map_to_local(moves[0]), 0.1).finished
+		var capturedPiece : GamePiece = piece_dictionary[moves[0]]
 		activePiece.anims.play('slam')
-		piece_dictionary[moves[0]].capture_sound.play()
 		await activePiece.anims.animation_finished
-		piece_dictionary[moves[0]].anims.play('captured')
+		piece_captured.emit(capturedPiece.piece_sprite.texture)
+		capturedPiece.anims.play("captured")
 		piece_dictionary.erase(moves[0])
 		await create_tween().tween_property(activePiece, 'position', map_to_local(moves[1]), 0.1).finished
-		activePiece.anims.play_backwards('raise')
-		activePiece.piece_sounds.play()
-		await activePiece.anims.animation_finished
+		var newMoves = get_valid_moves(activePiece)
+		if gameState.prepared_move == gameState.Moves.CAPTURE:
+			reveal_available_moves.emit(newMoves)
+			turn_continued.emit()
+			return
+			
 	if gameState.prepared_move == gameState.Moves.MOVE:
 		await create_tween().tween_property(activePiece, 'position', map_to_local(which), 0.1).finished
 		activePiece.anims.play_backwards('raise')
-		activePiece.piece_sounds.play()
 		await activePiece.anims.animation_finished
 	
 	piece_dictionary.get_or_add(activePiece.get_piece_coords(), activePiece)
+	requested_promotion.emit(activePiece, activePiece.get_piece_coords())
+	
 	activePiece.isClicked = false
 	activePiece.z_index = 1
 	activePiece = null
