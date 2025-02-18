@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://d0ydx6rhmpw73"
-path="res://.godot/imported/capture.wav-26f2de8cb05210e5bb51c1c112e54ca2.sample"
+uid="uid://bel6uyqrt0fkh"
+path="res://.godot/imported/capture2.wav-4c6c0312d36336f6e7b2dd48c4aad934.sample"
 
 [deps]
 
-source_file="res://grid-movement/audio/capture.wav"
-dest_files=["res://.godot/imported/capture.wav-26f2de8cb05210e5bb51c1c112e54ca2.sample"]
+source_file="res://grid-movement/audio/capture2.wav"
+dest_files=["res://.godot/imported/capture2.wav-4c6c0312d36336f6e7b2dd48c4aad934.sample"]
 
 [params]
 

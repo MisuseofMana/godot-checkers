@@ -1,5 +1,7 @@
 class_name BoardState extends Node2D
 
+signal player_turn_changed
+
 enum Moves {
 	CAPTURE,
 	MOVE,
@@ -10,8 +12,11 @@ enum WhosTurn {
 	DARK,
 	LIGHT,
 }
-
-var active_player := WhosTurn.DARK
+var active_player := WhosTurn.DARK :
+	set(value):
+		active_player = value
+		player_turn_changed.emit()
+		
 var prepared_move : Moves = Moves.NONE
 
 func _ready():

@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=4 uid="uid://brj733tcgn23c"]
 
 [ext_resource type="Texture2D" uid="uid://brr1nfdg3i1e4" path="res://grid-movement/art/board.png" id="1_hm3m5"]
-[ext_resource type="Script" path="res://grid-movement/game_controller.gd" id="1_lrbl6"]
+[ext_resource type="Script" path="res://grid-movement/board_state.gd" id="1_lrbl6"]
 [ext_resource type="PackedScene" uid="uid://bbmbn02kp6t3h" path="res://grid-movement/pieces/variants/dark_piece.tscn" id="2_t1kgm"]
 [ext_resource type="PackedScene" uid="uid://d3wp0or64hfl7" path="res://grid-movement/pieces/variants/light_piece.tscn" id="3_r46qh"]
 [ext_resource type="Script" path="res://grid-movement/board_controller.gd" id="3_wy5qg"]

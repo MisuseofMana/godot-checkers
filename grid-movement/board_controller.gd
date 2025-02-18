@@ -1,4 +1,4 @@
-extends TileMapLayer
+class_name BoardController extends TileMapLayer
 
 signal valid_move_clicked(where)
 

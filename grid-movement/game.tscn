@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://db5sh214c1rw4"]
+[gd_scene load_steps=7 format=3 uid="uid://db5sh214c1rw4"]
 
 [ext_resource type="PackedScene" uid="uid://brj733tcgn23c" path="res://grid-movement/game-board.tscn" id="1_5lrab"]
+[ext_resource type="Script" path="res://grid-movement/game_state.gd" id="1_koq18"]
 [ext_resource type="Texture2D" uid="uid://dh00byov5r1y5" path="res://grid-movement/art/dark_piece.png" id="1_ym2k5"]
+[ext_resource type="Theme" uid="uid://br1tchqfgt3ts" path="res://grid-movement/dark_theme.tres" id="2_0uvsu"]
+[ext_resource type="Theme" uid="uid://ddlhqlubadln6" path="res://grid-movement/light_theme.tres" id="4_nohhd"]
+[ext_resource type="Texture2D" uid="uid://bh33dh1fhiaal" path="res://grid-movement/art/light_piece.png" id="5_4wr66"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_koq18")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -15,49 +19,27 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+[node name="DarkContainer" type="MarginContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
 offset_right = 320.0
 offset_bottom = 648.0
+theme = ExtResource("2_0uvsu")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/DarkContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 20
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Control/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 63)
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/DarkContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 64.0
-grow_horizontal = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel/MarginContainer/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("1_ym2k5")
-stretch_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "DARK TO MOVE"
-
-[node name="Panel2" type="Panel" parent="CanvasLayer/Control/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel2"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/DarkContainer/HBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,8 +47,128 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Panel2/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/DarkContainer/HBoxContainer/Panel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/DarkContainer/HBoxContainer/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_4wr66")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/DarkContainer/HBoxContainer/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "TO PLAY"
+
+[node name="Panel2" type="Panel" parent="CanvasLayer/Control/DarkContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/DarkContainer/HBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/DarkContainer/HBoxContainer/Panel2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/DarkContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "PIECES WON"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Control/DarkContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 3
+
+[node name="LightContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -324.0
+offset_bottom = 324.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("4_nohhd")
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/LightContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/LightContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/LightContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/LightContainer/HBoxContainer/Panel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/LightContainer/HBoxContainer/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ym2k5")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/LightContainer/HBoxContainer/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "TO PLAY"
+
+[node name="Panel2" type="Panel" parent="CanvasLayer/Control/LightContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/LightContainer/HBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/LightContainer/HBoxContainer/Panel2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/LightContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "PIECES WON"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Control/LightContainer/HBoxContainer/Panel2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 3
+
 [node name="GameBoard" parent="." instance=ExtResource("1_5lrab")]
-position = Vector2(576, 320)
+position = Vector2(576, 280)
