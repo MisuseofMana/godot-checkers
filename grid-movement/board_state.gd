@@ -1,8 +1,10 @@
 class_name BoardState extends Node2D
 
 signal player_turn_changed(player: WhosTurn)
-signal piece_added_to_jail(pieceToAdd: Texture2D, whoCaptured: WhosTurn)
+signal piece_added_to_jail(pieceToAdd: Texture2D, whoCaptured: String)
 signal game_won(winText: String)
+signal turn_changed(whosTurn: String)
+
 enum Moves {
 	CAPTURE,
 	MOVE,
@@ -13,16 +15,19 @@ enum WhosTurn {
 	DARK,
 	LIGHT,
 }
+
+var turnStrings := ['dark', 'light']
 		
 var active_player := WhosTurn.DARK :
 	set(value):
 		active_player = value
-		player_turn_changed.emit(active_player)
+		player_turn_changed.emit(turnStrings[active_player])
 		
 var prepared_move : Moves = Moves.NONE
 
 func add_piece_to_jail(pieceTexture: Texture2D):
-	piece_added_to_jail.emit(pieceTexture, active_player)
+	
+	piece_added_to_jail.emit(pieceTexture, turnStrings[active_player])
 
 func _ready():
 	turn_setup.call_deferred()
@@ -39,24 +44,20 @@ func check_for_win():
 			if pieceCount.is_empty():
 				game_won.emit('dark')
 	
-func enable_dark_turn():
-	get_tree().call_group('light_piece', 'disable_collision')
-	get_tree().call_group('dark_piece', 'enable_collision')
-
-func enable_light_turn():
-	get_tree().call_group('light_piece', 'enable_collision')
-	get_tree().call_group('dark_piece', 'disable_collision')
-	
 func turn_setup():
 	match active_player:
 		WhosTurn.DARK:
-			enable_dark_turn()
+			get_tree().call_group('light_piece', 'disable_collision')
+			get_tree().call_group('dark_piece', 'enable_collision')
+			turn_changed.emit('dark')
 		WhosTurn.LIGHT:
-			enable_light_turn()
+			get_tree().call_group('light_piece', 'enable_collision')
+			get_tree().call_group('dark_piece', 'disable_collision')
+			turn_changed.emit('light')
 	check_for_win()
 
 func change_turn():
-	active_player = (active_player + 1) % WhosTurn.size()
+	active_player = (int(active_player) + 1) % WhosTurn.size()
 	turn_setup()
 
 func lock_interaction_to_active_piece(whichPiece: GamePiece):

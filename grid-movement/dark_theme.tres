@@ -5,7 +5,7 @@ content_margin_left = 5.0
 content_margin_top = 5.0
 content_margin_right = 5.0
 content_margin_bottom = 5.0
-bg_color = Color(0.18172, 0.20625, 0.280225, 1)
+bg_color = Color(0.568627, 0.639216, 0.666667, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -19,7 +19,13 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [resource]
-Button/font_sizes/font_size = 24
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/font_sizes/font_size = 16
 Button/styles/normal = SubResource("StyleBoxFlat_rg0al")
+HBoxContainer/constants/separation = 20
 Label/font_sizes/font_size = 25
+MarginContainer/constants/margin_bottom = 20
+MarginContainer/constants/margin_left = 20
+MarginContainer/constants/margin_right = 20
+MarginContainer/constants/margin_top = 20
 Panel/styles/panel = SubResource("StyleBoxFlat_goigd")
