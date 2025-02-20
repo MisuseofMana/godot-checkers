@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://bda8ej5u2fy4f"]
+[gd_scene load_steps=25 format=3 uid="uid://bda8ej5u2fy4f"]
 
 [ext_resource type="Script" path="res://grid-movement/pieces/piece.gd" id="2_7kry7"]
+[ext_resource type="Texture2D" uid="uid://6oiwav854sf6" path="res://grid-movement/art/hilight.png" id="3_6ksl6"]
 [ext_resource type="Texture2D" uid="uid://cjrfsijb1c4q3" path="res://grid-movement/art/piece-shadow.png" id="3_032yr"]
 [ext_resource type="Texture2D" uid="uid://bh33dh1fhiaal" path="res://grid-movement/art/light_piece.png" id="3_cm1ce"]
 [ext_resource type="AudioStream" uid="uid://kere3iu82it" path="res://grid-movement/audio/capture1.wav" id="4_asfi8"]
@@ -11,8 +12,8 @@
 [ext_resource type="Material" uid="uid://ci1abfufvdstr" path="res://grid-movement/promotion_particles.tres" id="5_rhwmf"]
 [ext_resource type="AudioStream" uid="uid://pjw06dnqcisg" path="res://grid-movement/audio/piece_move3.wav" id="6_1a3m0"]
 [ext_resource type="AudioStream" uid="uid://6inxijadmyj2" path="res://grid-movement/audio/piece_move4.wav" id="7_a0dkx"]
-[ext_resource type="AudioStream" uid="uid://dks8elb3auh2v" path="res://grid-movement/audio/promotion1.wav" id="10_fu10s"]
-[ext_resource type="AudioStream" uid="uid://dq1o6rofhoec8" path="res://grid-movement/audio/promotion2.wav" id="13_ykvv3"]
+[ext_resource type="AudioStream" uid="uid://d0mjdcdrkp2ac" path="res://grid-movement/audio/promotion1.wav" id="10_fu10s"]
+[ext_resource type="AudioStream" uid="uid://4ogsowd23no0" path="res://grid-movement/audio/promotion2.wav" id="13_ykvv3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e4vgu"]
 radius = 24.0
@@ -200,6 +201,42 @@ tracks/14/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("../Highlight:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3.93391e-06)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../Highlight:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.03, 1.03)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("../Highlight:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_ea36v"]
 resource_name = "captured"
@@ -360,7 +397,7 @@ tracks/3/keys = {
 }
 tracks/4/type = "value"
 tracks/4/imported = false
-tracks/4/enabled = true
+tracks/4/enabled = false
 tracks/4/path = NodePath(".:self_modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
@@ -429,6 +466,30 @@ tracks/9/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../Highlight:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -3.93391e-06), Vector2(0, -20)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../Highlight:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.03, 1.03), Vector2(1.25, 1.25)]
 }
 
 [sub_resource type="Animation" id="Animation_hf7mb"]
@@ -554,6 +615,18 @@ tracks/9/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../Highlight:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ikkac"]
 _data = {
@@ -579,7 +652,7 @@ stream_2/stream = ExtResource("6_1a3m0")
 stream_3/stream = ExtResource("7_a0dkx")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mcjmo"]
-random_pitch = 1.05
+playback_mode = 1
 streams_count = 2
 stream_0/stream = ExtResource("10_fu10s")
 stream_1/stream = ExtResource("13_ykvv3")
@@ -590,6 +663,12 @@ script = ExtResource("2_7kry7")
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("3_032yr")
+
+[node name="Highlight" type="Sprite2D" parent="."]
+modulate = Color(0.987834, 0.880078, 0, 1)
+position = Vector2(0, -3.93391e-06)
+scale = Vector2(1.03, 1.03)
+texture = ExtResource("3_6ksl6")
 
 [node name="PieceSprite" type="Sprite2D" parent="."]
 texture = ExtResource("3_cm1ce")
@@ -630,7 +709,7 @@ stream = SubResource("AudioStreamRandomizer_tkrii")
 
 [node name="PromotionSounds" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_mcjmo")
-volume_db = -5.0
+volume_db = -10.0
 
 [connection signal="input_event" from="PieceSprite/Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="input_event" from="PieceSprite/Area2D" to="PieceSprite" method="_on_area_2d_input_event"]

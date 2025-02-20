@@ -1,4 +1,4 @@
-class_name BoardController extends TileMapLayer
+class_name TileController extends TileMapLayer
 
 signal valid_move_clicked(where)
 
@@ -24,16 +24,16 @@ func show_available_moves(cells: Array[Vector2i]):
 	active_cells = cells
 	for cell in cells:
 		if check_is_promotion_square(cell):
-			set_cell(cell, 1, Vector2i(0,0), 2)
-		else:
 			set_cell(cell, 1, Vector2i(0,0), 1)
+		else:
+			set_cell(cell, 1, Vector2i(0,0), 0)
 
 func hide_available_move_tiles():
 	for cell in active_cells:
 		if check_is_promotion_square(cell):
-			set_cell(cell, 1, get_cell_atlas_coords(cell), 3)
+			set_cell(cell, 1, Vector2i(1,0), 4)
 		else:	
-			set_cell(cell, 1, get_cell_atlas_coords(cell), 0)
+			set_cell(cell, 1, Vector2i(1,0), 0)
 
 func allow_or_deny_promotion(piece: GamePiece, cell: Vector2i):
 	if check_is_promotion_square(cell):

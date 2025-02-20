@@ -6,5 +6,5 @@
 [node name="Sprite2D" groups=["dark_piece"] instance=ExtResource("1_kuoqn")]
 piece_type = &"dark"
 
-[node name="PieceSprite" parent="." index="1"]
+[node name="PieceSprite" parent="." index="2"]
 texture = ExtResource("2_oee1h")

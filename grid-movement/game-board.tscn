@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://brj733tcgn23c"]
+[gd_scene load_steps=11 format=4 uid="uid://brj733tcgn23c"]
 
 [ext_resource type="Texture2D" uid="uid://brr1nfdg3i1e4" path="res://grid-movement/art/board.png" id="1_hm3m5"]
 [ext_resource type="Script" path="res://grid-movement/board_state.gd" id="1_lrbl6"]
@@ -7,28 +7,20 @@
 [ext_resource type="Script" path="res://grid-movement/board_controller.gd" id="3_wy5qg"]
 [ext_resource type="Script" path="res://grid-movement/piece_controller.gd" id="4_0eg1t"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ulji1"]
-blend_mode = 1
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ftquj"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pyqth"]
 texture = ExtResource("1_hm3m5")
 texture_region_size = Vector2i(64, 64)
-0:0/next_alternative_id = 6
+0:0/next_alternative_id = 2
 0:0/0 = 0
+0:0/0/custom_data_0 = true
 0:0/1 = 1
-0:0/1/modulate = Color(0, 1, 0, 1)
-0:0/1/material = SubResource("CanvasItemMaterial_ulji1")
-0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 0:0/1/custom_data_0 = true
-0:0/2 = 2
-0:0/2/modulate = Color(0, 1, 0, 1)
-0:0/2/material = SubResource("CanvasItemMaterial_ulji1")
-0:0/2/custom_data_0 = true
-0:0/2/custom_data_1 = true
-0:0/3 = 3
-0:0/3/custom_data_1 = true
-1:0/next_alternative_id = 2
+0:0/1/custom_data_1 = true
+1:0/next_alternative_id = 5
 1:0/0 = 0
+1:0/4 = 4
+1:0/4/custom_data_1 = true
+2:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_2srqh"]
 tile_size = Vector2i(64, 64)
@@ -37,8 +29,8 @@ custom_data_layer_0/name = "validMove"
 custom_data_layer_0/type = 1
 custom_data_layer_1/name = "promotionTile"
 custom_data_layer_1/type = 1
-sources/1 = SubResource("TileSetAtlasSource_ftquj")
-tile_proxies/coords_level = [[0, Vector2i(0, 0)], [2, Vector2i(0, 0)], [1, Vector2i(0, 0)], [2, Vector2i(1, 0)]]
+sources/1 = SubResource("TileSetAtlasSource_pyqth")
+tile_proxies/coords_level = [[0, Vector2i(0, 0)], [2, Vector2i(0, 0)], [1, Vector2i(0, 0)], [2, Vector2i(1, 0)], [1, Vector2i(1, 0)], [2, Vector2i(2, 0)]]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_n7duf"]
 resource_name = "Pieces"
@@ -53,27 +45,27 @@ sources/1 = SubResource("TileSetScenesCollectionSource_n7duf")
 position = Vector2(256, 256)
 script = ExtResource("1_lrbl6")
 
-[node name="Board" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD8/wIAAQABAAAAAAD9/wMAAQABAAAAAAD+/wIAAQABAAAAAAD//wMAAQABAAAAAAAAAAIAAQABAAAAAAABAAMAAQABAAAAAAACAAIAAQABAAAAAAADAAMAAQABAAAAAAD9/wEAAQABAAAAAAD8/wAAAQABAAAAAAD+/wAAAQABAAAAAAAAAAAAAQABAAAAAAACAAAAAQABAAAAAAADAP//AQABAAAAAAABAP//AQABAAAAAAD/////AQABAAAAAAD9////AQABAAAAAAD8//7/AQABAAAAAAD+//7/AQABAAAAAAAAAP7/AQABAAAAAAACAP7/AQABAAAAAAADAP3/AQABAAAAAAABAP3/AQABAAAAAAD///3/AQABAAAAAAD9//3/AQABAAAAAAD8//z/AQABAAAAAAD+//z/AQABAAAAAAAAAPz/AQABAAAAAAACAPz/AQABAAAAAAD//wEAAQABAAAAAAABAAEAAQABAAAAAAADAAEAAQABAAAAAAD8/wMAAQAAAAAAAwD9/wIAAQAAAAAAAAD8/wEAAQAAAAAAAAD9/wAAAQAAAAAAAAD8////AQAAAAAAAAD9//7/AQAAAAAAAAD8//3/AQAAAAAAAAD9//z/AQAAAAAAAwD+//3/AQAAAAAAAAD+////AQAAAAAAAAD///7/AQAAAAAAAAD///z/AQAAAAAAAwAAAP3/AQAAAAAAAAABAPz/AQAAAAAAAwACAP3/AQAAAAAAAAADAPz/AQAAAAAAAwADAP7/AQAAAAAAAAABAP7/AQAAAAAAAAACAP//AQAAAAAAAAAAAP//AQAAAAAAAAABAAAAAQAAAAAAAAD//wAAAQAAAAAAAAAAAAEAAQAAAAAAAAD+/wEAAQAAAAAAAAD//wIAAQAAAAAAAAD+/wMAAQAAAAAAAwAAAAMAAQAAAAAAAwABAAIAAQAAAAAAAAACAAEAAQAAAAAAAAADAAIAAQAAAAAAAAACAAMAAQAAAAAAAwADAAAAAQAAAAAAAAA=")
+[node name="Tiles" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD8/wIAAQACAAAAAAD9/wMAAQACAAAAAAD+/wIAAQACAAAAAAD//wMAAQACAAAAAAAAAAIAAQACAAAAAAABAAMAAQACAAAAAAACAAIAAQACAAAAAAADAAMAAQACAAAAAAD9/wEAAQACAAAAAAD8/wAAAQACAAAAAAD+/wAAAQACAAAAAAAAAAAAAQACAAAAAAACAAAAAQACAAAAAAADAP//AQACAAAAAAABAP//AQACAAAAAAD/////AQACAAAAAAD9////AQACAAAAAAD8//7/AQACAAAAAAD+//7/AQACAAAAAAAAAP7/AQACAAAAAAACAP7/AQACAAAAAAADAP3/AQACAAAAAAABAP3/AQACAAAAAAD///3/AQACAAAAAAD9//3/AQACAAAAAAD8//z/AQACAAAAAAD+//z/AQACAAAAAAAAAPz/AQACAAAAAAACAPz/AQACAAAAAAD//wEAAQACAAAAAAABAAEAAQACAAAAAAADAAEAAQACAAAAAAD8/wEAAQABAAAAAAD9/wAAAQABAAAAAAD8////AQABAAAAAAD9//7/AQABAAAAAAD8//3/AQABAAAAAAD9//z/AQABAAAABAD+//3/AQABAAAAAAD+////AQABAAAAAAD///z/AQABAAAABAAAAP3/AQABAAAAAAABAPz/AQABAAAABAACAP3/AQABAAAAAAADAPz/AQABAAAABAADAP7/AQABAAAAAAABAP7/AQABAAAAAAACAP//AQABAAAAAAAAAP//AQABAAAAAAABAAAAAQABAAAAAAD//wAAAQABAAAAAAAAAAEAAQABAAAAAAD+/wEAAQABAAAAAAD//wIAAQABAAAAAAD+/wMAAQABAAAABAAAAAMAAQABAAAABAABAAIAAQABAAAAAAACAAEAAQABAAAAAAADAAIAAQABAAAAAAACAAMAAQABAAAABAADAAAAAQABAAAAAAD8/wMAAQABAAAABAD9/wIAAQABAAAAAAD///7/AQABAAAAAAA=")
 tile_set = SubResource("TileSet_2srqh")
 script = ExtResource("3_wy5qg")
 
 [node name="Pieces" type="TileMapLayer" parent="." node_paths=PackedStringArray("board", "gameState")]
-tile_map_data = PackedByteArray("AAD9/wIAAQAAAAAAAQD//wIAAQAAAAAAAQABAAIAAQAAAAAAAQADAAIAAQAAAAAAAQACAAEAAQAAAAAAAQAAAAEAAQAAAAAAAQD+/wEAAQAAAAAAAQD8/wEAAQAAAAAAAQD8/wMAAQAAAAAAAQD+/wMAAQAAAAAAAQAAAAMAAQAAAAAAAQACAAMAAQAAAAAAAQD9//7/AQAAAAAAAgD8//3/AQAAAAAAAgD9//z/AQAAAAAAAgD+//3/AQAAAAAAAgD///z/AQAAAAAAAgD///7/AQAAAAAAAgAAAP3/AQAAAAAAAgABAPz/AQAAAAAAAgABAP7/AQAAAAAAAgACAP3/AQAAAAAAAgADAPz/AQAAAAAAAgADAP7/AQAAAAAAAgA=")
+tile_map_data = PackedByteArray("AAD//wIAAQAAAAAAAQAAAAEAAQAAAAAAAQD///7/AQAAAAAAAgD8//3/AQAAAAAAAgD9//7/AQAAAAAAAgD+//3/AQAAAAAAAgAAAP3/AQAAAAAAAgABAP7/AQAAAAAAAgACAP3/AQAAAAAAAgADAP7/AQAAAAAAAgADAPz/AQAAAAAAAgABAPz/AQAAAAAAAgD///z/AQAAAAAAAgD9//z/AQAAAAAAAgD+/wEAAQAAAAAAAQD8/wEAAQAAAAAAAQD9/wIAAQAAAAAAAQD8/wMAAQAAAAAAAQD+/wMAAQAAAAAAAQAAAAMAAQAAAAAAAQABAAIAAQAAAAAAAQACAAEAAQAAAAAAAQADAAIAAQAAAAAAAQACAAMAAQAAAAAAAQA=")
 tile_set = SubResource("TileSet_eh1yx")
 script = ExtResource("4_0eg1t")
-board = NodePath("../Board")
+board = NodePath("../Tiles")
 gameState = NodePath("..")
 
-[connection signal="valid_move_clicked" from="Board" to="Pieces" method="move_piece"]
+[connection signal="valid_move_clicked" from="Tiles" to="Pieces" method="move_piece"]
 [connection signal="child_entered_tree" from="Pieces" to="Pieces" method="_on_piece_entered_tree"]
 [connection signal="child_exiting_tree" from="Pieces" to="Pieces" method="_on_piece_exiting_tree"]
-[connection signal="hide_avaliable_moves" from="Pieces" to="Board" method="hide_available_move_tiles"]
+[connection signal="hide_avaliable_moves" from="Pieces" to="Tiles" method="hide_available_move_tiles"]
 [connection signal="interaction_locked_to_piece" from="Pieces" to="." method="lock_interaction_to_active_piece"]
 [connection signal="move_prepared" from="Pieces" to="." method="set_move_type"]
 [connection signal="piece_captured" from="Pieces" to="." method="add_piece_to_jail"]
 [connection signal="piece_interaction_unlocked" from="Pieces" to="." method="unlock_active_pieces"]
 [connection signal="player_turn_changed" from="Pieces" to="." method="change_turn"]
-[connection signal="requested_promotion" from="Pieces" to="Board" method="allow_or_deny_promotion"]
-[connection signal="reveal_available_moves" from="Pieces" to="Board" method="show_available_moves"]
+[connection signal="requested_promotion" from="Pieces" to="Tiles" method="allow_or_deny_promotion"]
+[connection signal="reveal_available_moves" from="Pieces" to="Tiles" method="show_available_moves"]
 [connection signal="turn_continued" from="Pieces" to="." method="lock_all_pieces"]

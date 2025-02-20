@@ -10,6 +10,7 @@ class_name GamePiece extends Node2D
 @onready var capture_sound = $CaptureSound
 @onready var piece_sounds = $PieceSounds
 @onready var promotion_sound = $PromotionSounds
+@onready var highlight = $Highlight
 
 const DARK_KING = preload("res://grid-movement/art/dark-king.png")
 const LIGHT_KING = preload("res://grid-movement/art/light-king.png")
@@ -67,6 +68,8 @@ func promote_piece():
 
 func disable_collision():
 	collider.disabled = true
+	highlight.hide()
 
 func enable_collision():
 	collider.disabled = false
+	highlight.show()

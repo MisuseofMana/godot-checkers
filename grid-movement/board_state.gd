@@ -1,6 +1,5 @@
 class_name BoardState extends Node2D
 
-signal player_turn_changed(player: WhosTurn)
 signal piece_added_to_jail(pieceToAdd: Texture2D, whoCaptured: String)
 signal game_won(winText: String)
 signal turn_changed(whosTurn: String)
@@ -21,7 +20,7 @@ var turnStrings := ['dark', 'light']
 var active_player := WhosTurn.DARK :
 	set(value):
 		active_player = value
-		player_turn_changed.emit(turnStrings[active_player])
+		turn_changed.emit(turnStrings[active_player])
 		
 var prepared_move : Moves = Moves.NONE
 
@@ -49,11 +48,10 @@ func turn_setup():
 		WhosTurn.DARK:
 			get_tree().call_group('light_piece', 'disable_collision')
 			get_tree().call_group('dark_piece', 'enable_collision')
-			turn_changed.emit('dark')
 		WhosTurn.LIGHT:
 			get_tree().call_group('light_piece', 'enable_collision')
 			get_tree().call_group('dark_piece', 'disable_collision')
-			turn_changed.emit('light')
+	turn_changed.emit(turnStrings[active_player])
 	check_for_win()
 
 func change_turn():

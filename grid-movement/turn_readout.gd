@@ -15,6 +15,8 @@ const LIGHT_PIECE = preload("res://grid-movement/art/light_piece.png")
 const DARK_KING = preload("res://grid-movement/art/dark-king.png")
 const LIGHT_KING = preload("res://grid-movement/art/light-king.png")
 
+signal reset_game
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	handle_turn_change('dark')
@@ -51,3 +53,6 @@ func add_piece_to_captured_readout(pieceTexture: Texture2D, whoCaptured: String)
 			darks_captures.add_child(textureNode)
 		'dark':
 			lights_captures.add_child(textureNode)
+			
+func play_again():
+	reset_game.emit()
