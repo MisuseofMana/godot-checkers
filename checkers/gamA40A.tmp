@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://db5sh214c1rw4"]
+
+[ext_resource type="PackedScene" uid="uid://brj733tcgn23c" path="res://checkers/game-board.tscn" id="1_5lrab"]
+[ext_resource type="Script" path="res://checkers/game_controller.gd" id="1_fqgbx"]
+[ext_resource type="AudioStream" uid="uid://6ujsynp8q477" path="res://checkers/audio/Tears_in_the_Snow_Version_02_LOOP.wav" id="2_23eug"]
+[ext_resource type="PackedScene" uid="uid://c88ccftr5o2xt" path="res://checkers/user-interface.tscn" id="2_jl7ox"]
+[ext_resource type="Shader" path="res://checkers/balatro_background.gdshader" id="2_upnqb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b6iw7"]
+shader = ExtResource("2_upnqb")
+shader_parameter/spin_rotation_speed = 2.0
+shader_parameter/move_speed = 7.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0, 0.0585737, 0.0771927, 1)
+shader_parameter/colour_2 = Color(0.279933, 0.39676, 0, 1)
+shader_parameter/colour_3 = Color(0.086, 0.137, 0.145, 1)
+shader_parameter/contrast = 3.5
+shader_parameter/lighting = 0.4
+shader_parameter/spin_amount = 0.25
+shader_parameter/pixel_filter = 740.0
+shader_parameter/is_rotating = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydpad"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="GameScreen" type="Node2D" node_paths=PackedStringArray("boardNode", "uiNode")]
+script = ExtResource("1_fqgbx")
+boardNode = NodePath("Board")
+uiNode = NodePath("UserInterface")
+
+[node name="Theme" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_23eug")
+volume_db = -10.0
+autoplay = true
+
+[node name="Panel" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_b6iw7")
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ydpad")
+
+[node name="UserInterface" parent="." instance=ExtResource("2_jl7ox")]
+
+[node name="Board" parent="." instance=ExtResource("1_5lrab")]
+position = Vector2(576, 363)
+
+[connection signal="child_entered_tree" from="." to="." method="connect_signals"]
