@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://c13u6bifibmf1"]
+
+[ext_resource type="Texture2D" uid="uid://sy2dkky1e0rg" path="res://wasd-movement/assets/art/character.png" id="1_43o34"]
+[ext_resource type="Script" path="res://wasd-movement/characters/landing_effect.gd" id="2_i82ot"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ramoe"]
+atlas = ExtResource("1_43o34")
+region = Rect2(108, 126, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2m6o1"]
+atlas = ExtResource("1_43o34")
+region = Rect2(0, 126, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_053yl"]
+atlas = ExtResource("1_43o34")
+region = Rect2(18, 126, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2sksr"]
+atlas = ExtResource("1_43o34")
+region = Rect2(36, 126, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75hdw"]
+atlas = ExtResource("1_43o34")
+region = Rect2(54, 126, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulrso"]
+atlas = ExtResource("1_43o34")
+region = Rect2(72, 126, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bc5sw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ramoe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2m6o1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_053yl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2sksr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75hdw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulrso")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ramoe")
+}],
+"loop": false,
+"name": &"default",
+"speed": 16.0
+}]
+
+[node name="Landing" type="AnimatedSprite2D"]
+position = Vector2(1, -8)
+sprite_frames = SubResource("SpriteFrames_bc5sw")
+autoplay = "default"
+frame = 6
+frame_progress = 1.0
+script = ExtResource("2_i82ot")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b08dxfrmanqob"
-path="res://.godot/imported/tileset.png-35d4cd1def9d6da37f2f2cfa1533611d.ctex"
+uid="uid://cjrfsijb1c4q3"
+path="res://.godot/imported/piece-shadow.png-93f7c3ce4c80a3070988a63df2ac756b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://wasd-movement/tileset.png"
-dest_files=["res://.godot/imported/tileset.png-35d4cd1def9d6da37f2f2cfa1533611d.ctex"]
+source_file="res://wasd-movement/checkers/art/piece-shadow.png"
+dest_files=["res://.godot/imported/piece-shadow.png-93f7c3ce4c80a3070988a63df2ac756b.ctex"]
 
 [params]
 

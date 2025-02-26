@@ -1,0 +1,92 @@
+[gd_scene load_steps=12 format=3 uid="uid://nayhahh4w4xh"]
+
+[ext_resource type="Script" path="res://wasd-movement/props/crate.gd" id="1_xoni6"]
+[ext_resource type="Texture2D" uid="uid://b618lukks7qcp" path="res://wasd-movement/crate_shet.png" id="2_kpkid"]
+[ext_resource type="AudioStream" uid="uid://blr5bqnybqf3u" path="res://wasd-movement/assets/audio/breakCrate1.wav" id="3_cdvdn"]
+[ext_resource type="AudioStream" uid="uid://6s4og50rpb2b" path="res://wasd-movement/assets/audio/breakCrate2.wav" id="4_xgug0"]
+[ext_resource type="AudioStream" uid="uid://c7shl2crg0jj" path="res://wasd-movement/assets/audio/breakCrate3.wav" id="5_4au0e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_odv53"]
+size = Vector2(12, 12)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r7x77"]
+playback_mode = 2
+random_pitch = 1.1
+streams_count = 2
+stream_0/stream = ExtResource("3_cdvdn")
+stream_1/stream = ExtResource("4_xgug0")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_onmcd"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("5_4au0e")
+
+[sub_resource type="Curve" id="Curve_3mh3j"]
+min_value = -1.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_486gp"]
+curve = SubResource("Curve_3mh3j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cuih8"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(5, 5, 0)
+spread = 100.0
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 30.0
+gravity = Vector3(0, 30, 0)
+scale_min = 0.5
+scale_max = 1.5
+color = Color(0.768494, 0.677272, 0.69813, 1)
+hue_variation_curve = SubResource("CurveTexture_486gp")
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_xoni6")
+
+[node name="Crate" type="RigidBody2D" parent="."]
+max_contacts_reported = 10
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Crate"]
+polygon = PackedVector2Array(-6, -12, 6, -12, 6, 0, -6, 0)
+
+[node name="CrateSprite" type="Sprite2D" parent="Crate"]
+position = Vector2(0, -8)
+texture = ExtResource("2_kpkid")
+hframes = 3
+region_rect = Rect2(18, 84, 12, 12)
+
+[node name="Area2D" type="Area2D" parent="Crate"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crate/Area2D"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_odv53")
+
+[node name="DamageCrateSFX" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_r7x77")
+volume_db = -8.0
+
+[node name="DestroyCrateSFX" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_onmcd")
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+position = Vector2(0, -6)
+emitting = false
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_cuih8")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+
+[node name="InvulnerableTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="area_entered" from="Crate/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="finished" from="DestroyCrateSFX" to="." method="_on_destroy_crate_finished"]
+[connection signal="timeout" from="InvulnerableTimer" to="." method="_on_invulnerable_timer_timeout"]

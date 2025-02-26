@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b08dxfrmanqob"
-path="res://.godot/imported/tileset.png-35d4cd1def9d6da37f2f2cfa1533611d.ctex"
+uid="uid://bh33dh1fhiaal"
+path="res://.godot/imported/light_piece.png-0d70263f232ea806d34f9abe5cd70d6c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://wasd-movement/tileset.png"
-dest_files=["res://.godot/imported/tileset.png-35d4cd1def9d6da37f2f2cfa1533611d.ctex"]
+source_file="res://wasd-movement/checkers/art/light_piece.png"
+dest_files=["res://.godot/imported/light_piece.png-0d70263f232ea806d34f9abe5cd70d6c.ctex"]
 
 [params]
 

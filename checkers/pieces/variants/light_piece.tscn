@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3wp0or64hfl7"]
-
-[ext_resource type="PackedScene" uid="uid://bda8ej5u2fy4f" path="res://checkers/pieces/piece.tscn" id="1_gjmsh"]
-
-[node name="Sprite2D" groups=["light_piece"] instance=ExtResource("1_gjmsh")]
-piece_type = &"light"

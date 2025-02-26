@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://cyh5qg8wa0yvr"]
+
+[ext_resource type="Texture2D" uid="uid://bi21y880t3lv5" path="res://wasd-movement/assets/art/hearts1.png" id="1_88gpp"]
+[ext_resource type="Script" path="res://wasd-movement/props/heart.gd" id="2_2wndk"]
+[ext_resource type="AudioStream" uid="uid://cxorvsu6kgf7o" path="res://wasd-movement/assets/audio/heal1.wav" id="3_fa4r0"]
+[ext_resource type="AudioStream" uid="uid://ckcvcoa8v2wvg" path="res://wasd-movement/assets/audio/heal2.wav" id="4_yoj36"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gn867"]
+radius = 12.8
+height = 25.6
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4qcnj"]
+streams_count = 2
+stream_0/stream = ExtResource("3_fa4r0")
+stream_1/stream = ExtResource("4_yoj36")
+
+[node name="Heart" type="Sprite2D"]
+scale = Vector2(0.3125, 0.3125)
+texture = ExtResource("1_88gpp")
+offset = Vector2(0, -12)
+script = ExtResource("2_2wndk")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -12.8)
+shape = SubResource("CapsuleShape2D_gn867")
+
+[node name="Heal" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_4qcnj")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="finished" from="Heal" to="." method="_on_pickup_finished"]

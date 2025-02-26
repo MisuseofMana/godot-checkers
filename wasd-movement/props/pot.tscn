@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://dy54g7r0m1j2"]
+
+[ext_resource type="Texture2D" uid="uid://divw8iqaesu1c" path="res://wasd-movement/assets/art/tileset.png" id="1_63slo"]
+[ext_resource type="Script" path="res://wasd-movement/props/pot.gd" id="1_ycw4b"]
+[ext_resource type="AudioStream" uid="uid://63gfmdunvrbc" path="res://wasd-movement/assets/audio/break.wav" id="3_4wmow"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e4urn"]
+radius = 4.0
+height = 10.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3skrr"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("3_4wmow")
+
+[sub_resource type="Curve" id="Curve_3mh3j"]
+min_value = -1.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_486gp"]
+curve = SubResource("Curve_3mh3j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n1aa8"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 2.0
+spread = 100.0
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 30.0
+gravity = Vector3(0, 30, 0)
+scale_min = 0.5
+scale_max = 1.5
+color = Color(0.768494, 0.677272, 0.69813, 1)
+hue_variation_curve = SubResource("CurveTexture_486gp")
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_ycw4b")
+
+[node name="Pot" type="RigidBody2D" parent="."]
+max_contacts_reported = 10
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Pot"]
+polygon = PackedVector2Array(-5, -1, -5, -4, -2, -8, 2, -8, 5, -4, 5, -1, 3, 1, -3, 1)
+
+[node name="PotSprite" type="Sprite2D" parent="Pot"]
+position = Vector2(0, -4)
+texture = ExtResource("1_63slo")
+region_enabled = true
+region_rect = Rect2(36, 87, 9, 9)
+
+[node name="Area2D" type="Area2D" parent="Pot"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pot/Area2D"]
+position = Vector2(0, -3)
+shape = SubResource("CapsuleShape2D_e4urn")
+
+[node name="Shatter" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_3skrr")
+volume_db = -8.0
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+position = Vector2(0, -3)
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_n1aa8")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+
+[connection signal="area_entered" from="Pot/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="finished" from="Shatter" to="Pot" method="_on_shatter_finished"]

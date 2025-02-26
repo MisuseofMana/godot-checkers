@@ -1,0 +1,17 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://bnaya3lhhf814"]
+
+[resource]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(5, 1, 1)
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 0.3
+radial_velocity_min = -10.0
+radial_velocity_max = 9.99998
+gravity = Vector3(0, -50, 0)
+scale_min = 0.3
+scale_max = 0.8
+color = Color(0, 1, 0.85098, 1)
+hue_variation_min = -0.2
+hue_variation_max = 0.2
