@@ -1,9 +1,12 @@
-[gd_scene load_steps=44 format=3 uid="uid://0fvq56l12joo"]
+[gd_scene load_steps=48 format=3 uid="uid://0fvq56l12joo"]
 
 [ext_resource type="Texture2D" uid="uid://sy2dkky1e0rg" path="res://wasd-movement/assets/art/character.png" id="1_lsajq"]
 [ext_resource type="Script" path="res://wasd-movement/characters/character.gd" id="1_xp84i"]
 [ext_resource type="AudioStream" uid="uid://clh8vmdmk8h8y" path="res://wasd-movement/assets/audio/attack1.wav" id="3_7dpq1"]
+[ext_resource type="AudioStream" uid="uid://c5ebf1omdgnae" path="res://wasd-movement/assets/audio/land1.wav" id="3_ning2"]
+[ext_resource type="AudioStream" uid="uid://chggf17sdwarl" path="res://wasd-movement/assets/audio/land2.wav" id="4_mk5gg"]
 [ext_resource type="AudioStream" uid="uid://y7k4clgynwws" path="res://wasd-movement/assets/audio/attack2.wav" id="4_swk0g"]
+[ext_resource type="AudioStream" uid="uid://devyow7ofd1p" path="res://wasd-movement/assets/audio/land3.wav" id="5_oxj76"]
 [ext_resource type="AudioStream" uid="uid://cv0trfkyp8gfm" path="res://wasd-movement/assets/audio/attack3.wav" id="5_uf022"]
 [ext_resource type="AudioStream" uid="uid://mjgi7tysendj" path="res://wasd-movement/assets/audio/attack4.wav" id="6_t4ngl"]
 [ext_resource type="AudioStream" uid="uid://cvyb7jcedy3si" path="res://wasd-movement/assets/audio/attack5.wav" id="7_m7q07"]
@@ -275,6 +278,13 @@ height = 6.0
 radius = 3.0
 height = 6.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nw4ch"]
+random_pitch = 1.1
+streams_count = 3
+stream_0/stream = ExtResource("3_ning2")
+stream_1/stream = ExtResource("4_mk5gg")
+stream_2/stream = ExtResource("5_oxj76")
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_exf0t"]
 streams_count = 7
 stream_0/stream = ExtResource("3_7dpq1")
@@ -323,6 +333,11 @@ position = Vector2(7, -6)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_tdw3p")
 disabled = true
+
+[node name="JumpSFX" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_nw4ch")
+volume_db = -10.0
+pitch_scale = 0.9
 
 [node name="AttackSFX" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_exf0t")

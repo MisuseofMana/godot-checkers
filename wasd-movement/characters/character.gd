@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var sprite = $AnimatedSprite2D
 @onready var attack_sfx = $AttackSFX
+@onready var jump_sfx = $JumpSFX
 @onready var pickup_particles = $PickupParticles
 
 @export var SPEED : float = 100.0
@@ -53,6 +54,7 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	direction = Input.get_vector("left", "right", "jump", "crouch")
+		
 	if direction.x != 0 and sprite.animation != 'land':
 		velocity.x = direction.x * SPEED
 	else:
@@ -86,6 +88,7 @@ func dbl_jump():
 	animation_locked = true
 
 func land():
+	jump_sfx.play()
 	sprite.play('land')
 	animation_locked = true
 	
