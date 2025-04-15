@@ -19,6 +19,21 @@ var health : int = 0:
 		health = newValue
 		health_changed.emit(newValue)
 
+var interactables : Array[Area2D]:
+	set(newValue):
+		interactables = newValue
+		
+
+func add_to_interactables(area: Area2D):
+	var newInteractables = interactables.duplicate()
+	newInteractables.push_front(area)
+	interactables = newInteractables
+	
+func remove_from_interactables(area: Area2D):
+	var newInteractables = interactables.duplicate()
+	newInteractables.erase(area)
+	interactables = newInteractables
+
 func _ready():
 	coins = 1
 	health = 3

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dy54g7r0m1j2"]
 
 [ext_resource type="Texture2D" uid="uid://divw8iqaesu1c" path="res://wasd-movement/assets/art/tileset.png" id="1_63slo"]
-[ext_resource type="Script" path="res://wasd-movement/props/pot.gd" id="1_ycw4b"]
+[ext_resource type="Script" uid="uid://v48qmrwm4bko" path="res://wasd-movement/props/pot.gd" id="1_ycw4b"]
 [ext_resource type="AudioStream" uid="uid://63gfmdunvrbc" path="res://wasd-movement/assets/audio/break.wav" id="3_4wmow"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e4urn"]
@@ -14,7 +14,7 @@ streams_count = 1
 stream_0/stream = ExtResource("3_4wmow")
 
 [sub_resource type="Curve" id="Curve_3mh3j"]
-min_value = -1.0
+_limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 

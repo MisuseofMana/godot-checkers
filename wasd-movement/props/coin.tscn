@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bj6aqcgrqvu3g"]
 
 [ext_resource type="Texture2D" uid="uid://c0rklmabelriv" path="res://wasd-movement/assets/art/coin.png" id="1_6g4k2"]
-[ext_resource type="Script" path="res://wasd-movement/props/coin.gd" id="2_0u1sn"]
+[ext_resource type="Script" uid="uid://c867fcjebaf4a" path="res://wasd-movement/props/coin.gd" id="2_0u1sn"]
 [ext_resource type="AudioStream" uid="uid://c0pcuex6008nh" path="res://wasd-movement/assets/audio/coin_pickup1.wav" id="3_jl4m2"]
 [ext_resource type="AudioStream" uid="uid://mi3fh4wjr0g0" path="res://wasd-movement/assets/audio/coin_pickup2.wav" id="4_12axf"]
 [ext_resource type="AudioStream" uid="uid://ditpvcs70n7qt" path="res://wasd-movement/assets/audio/coin_pickup3.wav" id="5_uyy61"]

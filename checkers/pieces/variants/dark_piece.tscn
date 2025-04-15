@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbmbn02kp6t3h"]
+
+[ext_resource type="PackedScene" uid="uid://bda8ej5u2fy4f" path="res://checkers/pieces/piece.tscn" id="1_kuoqn"]
+[ext_resource type="Texture2D" uid="uid://dh00byov5r1y5" path="res://checkers/art/dark_piece.png" id="2_oee1h"]
+
+[node name="Sprite2D" groups=["dark_piece"] instance=ExtResource("1_kuoqn")]
+piece_type = &"dark"
+
+[node name="PieceSprite" parent="." index="2"]
+texture = ExtResource("2_oee1h")

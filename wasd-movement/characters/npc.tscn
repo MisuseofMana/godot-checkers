@@ -1,0 +1,80 @@
+[gd_scene load_steps=12 format=3 uid="uid://b8d75isr6pi7d"]
+
+[ext_resource type="Texture2D" uid="uid://bgburceli73tr" path="res://wasd-movement/assets/art/noble-woman-sprite.png" id="1_27box"]
+[ext_resource type="Script" uid="uid://bvrsp2hgg41h" path="res://wasd-movement/characters/npc.gd" id="1_ao5y3"]
+[ext_resource type="Script" uid="uid://dc53cw0yjuamu" path="res://wasd-movement/characters/interactable_area.gd" id="3_q72p1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0swlj"]
+atlas = ExtResource("1_27box")
+region = Rect2(0, 0, 12, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqwan"]
+atlas = ExtResource("1_27box")
+region = Rect2(12, 0, 12, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5amn"]
+atlas = ExtResource("1_27box")
+region = Rect2(24, 0, 12, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qowqo"]
+atlas = ExtResource("1_27box")
+region = Rect2(36, 0, 12, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwgq5"]
+atlas = ExtResource("1_27box")
+region = Rect2(48, 0, 12, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsf8l"]
+atlas = ExtResource("1_27box")
+region = Rect2(60, 0, 12, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rpgte"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0swlj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqwan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5amn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qowqo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwgq5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsf8l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ijbdr"]
+radius = 12.0
+height = 33.6
+
+[node name="NPC" type="Node2D"]
+script = ExtResource("1_ao5y3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -9)
+scale = Vector2(0.622258, 0.622258)
+sprite_frames = SubResource("SpriteFrames_rpgte")
+autoplay = "default"
+frame = 4
+frame_progress = 0.280338
+metadata/_edit_group_ = true
+
+[node name="Area2D" type="Area2D" parent="AnimatedSprite2D" groups=["interaction_areas"]]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_q72p1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Area2D"]
+shape = SubResource("CapsuleShape2D_ijbdr")

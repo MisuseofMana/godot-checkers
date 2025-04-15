@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://nayhahh4w4xh"]
 
-[ext_resource type="Script" path="res://wasd-movement/props/crate.gd" id="1_xoni6"]
+[ext_resource type="Script" uid="uid://bvp0fg3qaqib3" path="res://wasd-movement/props/crate.gd" id="1_xoni6"]
 [ext_resource type="Texture2D" uid="uid://b618lukks7qcp" path="res://wasd-movement/crate_shet.png" id="2_kpkid"]
 [ext_resource type="AudioStream" uid="uid://blr5bqnybqf3u" path="res://wasd-movement/assets/audio/breakCrate1.wav" id="3_cdvdn"]
 [ext_resource type="AudioStream" uid="uid://6s4og50rpb2b" path="res://wasd-movement/assets/audio/breakCrate2.wav" id="4_xgug0"]
@@ -22,7 +22,7 @@ streams_count = 1
 stream_0/stream = ExtResource("5_4au0e")
 
 [sub_resource type="Curve" id="Curve_3mh3j"]
-min_value = -1.0
+_limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 

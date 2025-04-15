@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cyh5qg8wa0yvr"]
 
 [ext_resource type="Texture2D" uid="uid://bi21y880t3lv5" path="res://wasd-movement/assets/art/hearts1.png" id="1_88gpp"]
-[ext_resource type="Script" path="res://wasd-movement/props/heart.gd" id="2_2wndk"]
+[ext_resource type="Script" uid="uid://dw7wxukefwtgc" path="res://wasd-movement/props/heart.gd" id="2_2wndk"]
 [ext_resource type="AudioStream" uid="uid://cxorvsu6kgf7o" path="res://wasd-movement/assets/audio/heal1.wav" id="3_fa4r0"]
 [ext_resource type="AudioStream" uid="uid://ckcvcoa8v2wvg" path="res://wasd-movement/assets/audio/heal2.wav" id="4_yoj36"]
 

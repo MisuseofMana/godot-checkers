@@ -50,6 +50,10 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("attack"):
 		attack()
+	
+	if Input.is_action_just_pressed('interact'):
+		if not GameState.interactables.is_empty():
+			GameState.interactables[0].interact()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -124,3 +128,10 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		falling()
 	if ['land'].has(sprite.animation):
 		animation_locked = false
+
+
+func _on_interaction_area_entered(area):
+	GameState.add_to_interactables(area)
+
+func _on_interaction_area_exited(area):
+	GameState.remove_from_interactables(area)

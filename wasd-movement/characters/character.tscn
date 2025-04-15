@@ -1,7 +1,7 @@
-[gd_scene load_steps=48 format=3 uid="uid://0fvq56l12joo"]
+[gd_scene load_steps=49 format=3 uid="uid://0fvq56l12joo"]
 
 [ext_resource type="Texture2D" uid="uid://sy2dkky1e0rg" path="res://wasd-movement/assets/art/character.png" id="1_lsajq"]
-[ext_resource type="Script" path="res://wasd-movement/characters/character.gd" id="1_xp84i"]
+[ext_resource type="Script" uid="uid://bm3rkwyqvekha" path="res://wasd-movement/characters/character.gd" id="1_xp84i"]
 [ext_resource type="AudioStream" uid="uid://clh8vmdmk8h8y" path="res://wasd-movement/assets/audio/attack1.wav" id="3_7dpq1"]
 [ext_resource type="AudioStream" uid="uid://c5ebf1omdgnae" path="res://wasd-movement/assets/audio/land1.wav" id="3_ning2"]
 [ext_resource type="AudioStream" uid="uid://chggf17sdwarl" path="res://wasd-movement/assets/audio/land2.wav" id="4_mk5gg"]
@@ -266,6 +266,8 @@ animations = [{
 radius = 4.0
 height = 14.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_7s7wg"]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jhid3"]
 radius = 3.0
 height = 14.0
@@ -310,6 +312,15 @@ offset = Vector2(0, -8)
 position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_cnide")
 
+[node name="Interaction" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="InteractionCollision" type="CollisionShape2D" parent="Interaction"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_7s7wg")
+
 [node name="Pickup" type="Area2D" parent="."]
 collision_mask = 0
 
@@ -345,8 +356,10 @@ stream = SubResource("AudioStreamRandomizer_exf0t")
 [node name="PickupParticles" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 40
-process_material = ExtResource("10_00e3v")
 lifetime = 0.4
 one_shot = true
+process_material = ExtResource("10_00e3v")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="Interaction" to="." method="_on_interaction_area_entered"]
+[connection signal="area_exited" from="Interaction" to="." method="_on_interaction_area_exited"]

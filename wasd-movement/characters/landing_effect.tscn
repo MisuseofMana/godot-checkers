@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://c13u6bifibmf1"]
 
 [ext_resource type="Texture2D" uid="uid://sy2dkky1e0rg" path="res://wasd-movement/assets/art/character.png" id="1_43o34"]
-[ext_resource type="Script" path="res://wasd-movement/characters/landing_effect.gd" id="2_i82ot"]
+[ext_resource type="Script" uid="uid://da5nhon66iwwf" path="res://wasd-movement/characters/landing_effect.gd" id="2_i82ot"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ramoe"]
 atlas = ExtResource("1_43o34")
